@@ -64,7 +64,6 @@ export const getJobApplicants = async (req, res) => {
     const { jobId } = req.params;
 
     const applications = await Application.find({ jobId });
-
     res.json({
       success: true,
       data: applications,
@@ -77,23 +76,24 @@ export const getJobApplicants = async (req, res) => {
   }
 };
 
+export const updateApplicationStatus = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { status } = req.body;
 
-export const updateApplicationStatus = async (req, res)=>{
-    try{
-        const {applicationId} = req.params;
-        const {status} = req.body;
-        
-        const application = await Application.findByIdAndUpdate(applicationId,{status},
-            {new:true}
-        );
-        res.json({
-            success:true,
-            data:application
-        });
-    }catch(err){
-        res.status(500).json({
-            success:false,
-            message:err.message
-        });
-    }
+    const application = await Application.findByIdAndUpdate(
+      applicationId,
+      { status },
+      { returnDocument: "after" },
+    );
+    res.json({
+      success: true,
+      data: application,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 };

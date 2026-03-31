@@ -12,7 +12,7 @@ router.get("/my",protect,authorizeRoles("candidate"),getMyApplications);
 
 
 // employer
-router.get("/job/:jobid",protect,authorizeRoles("employer"),getJobApplicants);
-router.put("/applicationId",protect,authorizeRoles("employer"),updateApplicationStatus);
+router.get("/job/:jobId",protect,authorizeRoles("employer"),getJobApplicants);
+router.put("/:applicationId",protect,authorizeRoles("employer"),updateApplicationStatus);
 
 export default router;
