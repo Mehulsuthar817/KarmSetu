@@ -4,6 +4,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
+import profileRoutes from "./routes/profile.routes.js";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use("/api/jobs", jobRoutes);
 
 // application ,view my application...
 app.use("/api/applications", applicationRoutes);
+
+app.use("/api/profile",profileRoutes)
 
 app.get("/", (req, res) => {
   res.send("API is running...");

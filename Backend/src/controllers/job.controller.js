@@ -13,7 +13,6 @@ export const createJob = async (req, res) => {
       workMode,
     } = req.body;
 
-
     const job = await Job.create({
       title,
       description,
@@ -24,14 +23,16 @@ export const createJob = async (req, res) => {
       jobType,
       workMode,
       employerId: req.user._id,
-      slug: title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, ""),
+      slug: title
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]+/g, ""),
     });
 
     res.status(201).json({
       success: true,
       data: job,
     });
-
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -60,7 +61,7 @@ export const getJobs = async (req, res) => {
       location: job.location,
       salary: job.salary,
       type: job.jobType,
-      workMode:job.workMode
+      workMode: job.workMode,
     }));
 
     res.json({
@@ -76,28 +77,105 @@ export const getJobs = async (req, res) => {
   }
 };
 
-export const getSingleJob = async (req,res)=>{
-    try{
-        const {id} = req.params;
+export const getSingleJob = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-        const job = await Job.findById(id);
+    const job = await Job.findById(id);
 
-        if(!job){
-            return res.status(404).json({
-                success:false,
-                message: "Job not found"
-            });
-        }
-
-        res.json({
-            succsess:true,
-            data:job
-        });
-
-    }catch(err){
-        res.status(500).json({
-            success:false,
-            message: err.message
-        });
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
     }
-}
+
+    res.json({
+      succsess: true,
+      data: job,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getJobsadvanced = async (req, res) => {
+  try {
+    const {
+      skill,
+      location,
+      workMode,
+      jobType,
+      minSalary,
+      search,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const pipeline = [];
+
+    let match = { isActive: true };
+
+    if (skill) {
+      // $in -> if that skill exixts in skills array
+      match.skillsRequired = { $in: [skill] };
+    }
+    if (location) {
+      match.location = location;
+    }
+    if (workMode) {
+      match.workMode = workMode;
+    }
+    if(jobType){
+      match.jobType = jobType;
+    }
+    if (minSalary) {
+      match["salary.min"] = { $gte: Number(minSalary) };
+    }
+    if (search) {
+      match.$or = [
+        // $regex -> search is "app", it will match "Apple", "WhatsApp", and "Application".
+        // $options: "i" (Case Insensitivity)
+        { title: { $regex: search, $options: "i" } },
+        { companyName: { $regex: search, $options: "i" } },
+      ];
+    }
+    pipeline.push({ $match: match });
+
+    pipeline.push({ $sort: { createdAt: -1 } });
+
+    const skip = (page - 1) * limit;
+// $skip: Skips results from previous pages (e.g., on Page 2, it skips the first 10)
+    pipeline.push({ $skip: skip });
+    pipeline.push({ $limit: Number(limit) });
+
+    pipeline.push({
+      $project: {
+        _id: 1,
+        title: 1,
+        company: "$companyName",
+        location: 1,
+        workMode: 1,
+        jobType: 1,
+        salary: 1,
+        slug: 1,
+      },
+    });
+
+    const jobs = await Job.aggregate(pipeline);
+
+    res.json({
+      success: true,
+      count: jobs.length,
+      data: jobs,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
