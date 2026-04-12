@@ -2,12 +2,13 @@ import express from "express";
 import { protect } from "../middleware/auth.middleware.js";
 import { authorizeRoles } from "../middleware/role.middleware.js";
 import { applyJob, getJobApplicants, getMyApplications, updateApplicationStatus } from "../controllers/application.controller.js";
+import upload from "../middleware/upload.middleware.js";
 
 
 const router = express.Router();
 
 // candidate
-router.post("/apply",protect,authorizeRoles("candidate"),applyJob);
+router.post("/apply",protect,authorizeRoles("candidate"),upload.single("resume"),applyJob);
 router.get("/my",protect,authorizeRoles("candidate"),getMyApplications);
 
 

@@ -1,30 +1,17 @@
-import Application from "../models/Application.js";
-import Job from "../models/Job.js";
+import applyToJobService from "../services/application.service.js";
 
 export const applyJob = async (req, res) => {
   try {
-    const { jobId } = req.body;
-
-    const job = await Job.findById(jobId);
-
-    if (!job) {
-      return res.status(404).json({
-        success: false,
-        message: "job Not found",
-      });
-    }
-
-    const application = await Application.create({
-      jobId,
-      candidateId: req.user._id,
-      jobTitle: job.title,
-      companyName: job.companyName,
-      candidateName: req.user.name,
-    });
+    const application = await applyToJobService(
+      req.body.jobId,
+      req.user,
+      req.file,
+    );
 
     res.status(201).json({
       success: true,
       message: "Applied successfully",
+      data: application,
     });
   } catch (err) {
     if (err.code === 11000) {
