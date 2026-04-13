@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
 import User from "../models/User.js";
+import generateToken from "../utils/generateToken.js";
 
 export const register = async (req, res) => {
   try {
@@ -41,12 +42,12 @@ export const login = async (req, res) => {
   try {
     const { email,password } = req.body;
     const user = await User.findOne({ email });
-
+    console.log(user);
     //to check if user exists or not
     if (!user) {
       res.status(400).json({
         success: false,
-        message: "User does no exists",
+        message: "User does not exists",
       });
     }
 
@@ -60,18 +61,10 @@ export const login = async (req, res) => {
       });
     }
     //token for user
-    const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" },
-    );
+    generateToken(res,user);
 
     res.status(201).json({
       success: true,
-      token,
       user: {
         id: user._id,
         name: user.name,

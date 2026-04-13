@@ -3,13 +3,9 @@ import jwt from "jsonwebtoken";
 
 export const protect = async (req,res,next)=>{
     try{
-        let token;
-        const authHeader = req.headers.authorization || req.headers.Authorization;
-        // starts with is method in js that return true if it comstain the substring else false
-        if(authHeader && authHeader.startsWith("Bearer")){
-        // split is method that chops the string and put into array ["bearer","ahsdkja"] like this
-            token = authHeader.split(" ")[1];
-        }
+        
+        const token = req.cookies.token;
+
         if(!token){
             return res.status(401).json({
                 success:false,

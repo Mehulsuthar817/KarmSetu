@@ -1,14 +1,23 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+const app = express();
+app.use(cookieParser());
 
 import authRoutes from "./routes/auth.routes.js";
 import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 
-const app = express();
 
-app.use(cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173", // No trailing slash
+  credentials: true,               // Required for cookies/sessions
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
