@@ -1,15 +1,18 @@
 import { useState } from "react";
 import API from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() { // 1. Capitalize component names
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault(); // 2. Prevent the page from refreshing
     try {
       await API.post("/auth/login", { email, password });
       alert("Login successful");
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
       alert("Login failed");
@@ -24,7 +27,7 @@ function Login() { // 1. Capitalize component names
         <input 
           type="email" 
           value={email}
-          onChange={(e) => setEmail(e.target.value)} // 4. Use e.target.value
+          onChange={(e) => setEmail((e.target.value).toLowerCase())} // 4. Use e.target.value
         />
 
         <label>Password</label>

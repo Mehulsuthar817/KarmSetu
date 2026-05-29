@@ -88,15 +88,7 @@ Frontend directory is currently empty. Planned: React/Vue app consuming the API.
 - Database: MongoDB Atlas
 - Static files: Cloudinary
 
-## TODO
-- Implement Frontend
-- Add tests (Jest/Supertest)
-- Rate limiting
-- Email notifications
-- Dockerize
 
-## Contributing
-Fork, PR with `blackboxai/` prefix branch.
 
 ---
 *Built with ❤️ for job seekers and employers*

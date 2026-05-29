@@ -12,7 +12,7 @@ export const createJob = async (req, res) => {
       jobType,
       workMode,
     } = req.body;
-
+    console.log(req.user);
     const job = await Job.create({
       title,
       description,

@@ -5,7 +5,7 @@ import { getJobs ,createJob, getSingleJob, getJobsadvanced } from "../controller
 
 const router = express.Router();
 
-router.post("/create",protect,authorizeRoles("employer"),createJob)
+router.post("/create",protect,authorizeRoles("employer"),createJob);
 
 router.get("/",getJobs);
 router.get("/advanced",getJobsadvanced);

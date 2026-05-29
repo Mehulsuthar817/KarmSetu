@@ -4,7 +4,7 @@ import { getMyprofile, upsertProfile } from "../controllers/profile.controller.j
 
 const router = express.Router();
 
-router.post("/",protect,upsertProfile);
+router.put("/",protect,upsertProfile);
 router.get("/",protect,getMyprofile);
 
 export default router;

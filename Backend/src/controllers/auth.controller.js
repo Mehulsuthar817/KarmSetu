@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import CandidateProfile from "../models/CandidateProfile.js";
 
 export const register = async (req, res) => {
   try {
@@ -25,6 +26,17 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
     });
+    if (role == "candidate") {
+      const candi = await CandidateProfile.create({
+        userId: user._id,
+      });
+    }
+    if (role === "employer") {
+      await EmployerProfile.create({
+        userId: user._id,
+        companyName: "My Company",
+      });
+    }
 
     res.status(201).json({
       success: true,
@@ -40,9 +52,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email,password } = req.body;
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
-    console.log(user);
+
     //to check if user exists or not
     if (!user) {
       res.status(400).json({
@@ -61,7 +73,7 @@ export const login = async (req, res) => {
       });
     }
     //token for user
-    generateToken(res,user);
+    generateToken(res, user);
 
     res.status(201).json({
       success: true,

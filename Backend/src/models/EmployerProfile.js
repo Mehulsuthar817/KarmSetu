@@ -18,7 +18,7 @@ const employerProfileSchema = new mongoose.Schema(
 
     website: String,
 
-    Location: String,
+    location: String,
   },
   { timestamps: true },
 );

@@ -1,7 +1,14 @@
+import Application from "../models/Application.js";
 import applyToJobService from "../services/application.service.js";
 
 export const applyJob = async (req, res) => {
   try {
+    if(!req.file){
+      return res.status(500).json({
+      success: false,
+      message: "Resume required",
+    });
+    }
     const application = await applyToJobService(
       req.body.jobId,
       req.user,

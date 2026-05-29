@@ -16,7 +16,7 @@ export default function Register() {
         e.preventDefault();
         await API.post("auth/register",{name , email , role , password});
         alert("Register Successfully");
-        navigate("/login");
+        navigate("/Login");
     }catch(err){
         console.log(err);
         
