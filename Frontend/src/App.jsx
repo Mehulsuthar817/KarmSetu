@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Jobs from "./pages/Job.jsx";
@@ -6,11 +6,23 @@ import JobDetails from "./pages/JobDetails.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import CreateJob from "./pages/CreateJob.jsx";
 import Profile from "./pages/Profile.jsx";
+import Navbar from "./components/PrismNav.jsx";
+import PrismNavbar from "./components/PrismNav.jsx";
 
-function app() {
+
+function App() {
+  // const location = useLocation();
+
+  // // Define routes where Navbar should NOT appear
+  // const hideNavbarOn = ["/login", "/register", "/"];
+
+  // const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <BrowserRouter>
+    {/* {showNavbar && <Navbar/>} */}
+    <PrismNavbar/> 
       <Routes>
+           
         <Route path="/" />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -23,4 +35,4 @@ function app() {
     </BrowserRouter>
   );
 }
-export default app;
+export default App;
