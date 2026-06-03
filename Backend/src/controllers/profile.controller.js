@@ -53,13 +53,15 @@ export const upsertProfile = async (req, res) => {
 
 export const getMyprofile = async (req, res) => {
   try {
+    
     const userId = req.user._id;
     const role = req.user.role;
 
     let profile;
+     
 
 if (role === "candidate") {
-
+ 
   profile = await CandidateProfile.findOne({ userId })
     .populate("userId", "name email role");
 
@@ -71,7 +73,7 @@ if (role === "employer") {
     .populate("userId", "name email role");
 
 }
-    
+ 
 
     res.json({
       success: true,

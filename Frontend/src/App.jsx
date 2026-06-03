@@ -1,13 +1,26 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Jobs from "./pages/Job.jsx";
 import JobDetails from "./pages/JobDetails.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
+import Home from "./pages/Home.jsx";
 import CreateJob from "./pages/CreateJob.jsx";
 import Profile from "./pages/Profile.jsx";
 import Navbar from "./components/PrismNav.jsx";
 import PrismNavbar from "./components/PrismNav.jsx";
+import { Children } from "react";
+import Dashboard from "./pages/Dashboard.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
+
+function AppLayout({children}){
+  return(
+    <>
+    <PrismNavbar/> 
+    {children}
+    </>
+  )
+}
 
 
 function App() {
@@ -20,17 +33,19 @@ function App() {
   return (
     <BrowserRouter>
     {/* {showNavbar && <Navbar/>} */}
-    <PrismNavbar/> 
+    
       <Routes>
            
         <Route path="/" />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/home" element={ <AppLayout><Home /></AppLayout> } />
+        <Route path="/dashboard" element={ <AppLayout> <ProtectedRoute> <Dashboard /> </ProtectedRoute> </AppLayout> } />
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="job/:slug/:id" element={<JobDetails />} />
-        <Route path="/Create-job" element={<CreateJob />} />
-        <Route path="/profile" element={<Profile />} />
+        
+        <Route path="/Create-job" element={ <ProtectedRoute> <CreateJob /></ProtectedRoute> } />
+        <Route path="/profile" element={ <ProtectedRoute><Profile /></ProtectedRoute> } />
       </Routes>
     </BrowserRouter>
   );

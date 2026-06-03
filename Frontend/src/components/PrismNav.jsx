@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence, useAnimationFrame } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Briefcase, PlusSquare, User, Info, X } from "lucide-react";
@@ -37,7 +38,7 @@ function usePrismColor(speed = 0.4) {
 
 // ── Individual nav item ────────────────────────────────────────────
 const NAV_ITEMS = [
-  { label: "Home",       to: "/dashboard",   icon: Home,       beam: "#00f5ff" },
+  { label: "Home",       to: "/home",   icon: Home,       beam: "#00f5ff" },
   { label: "Jobs",       to: "/jobs",        icon: Briefcase,  beam: "#a855f7" },
   { label: "Create Job", to: "/create-jobs", icon: PlusSquare, beam: "#ec4899" },
   { label: "Profile",    to: "/profile",     icon: User,       beam: "#3b82f6" },
