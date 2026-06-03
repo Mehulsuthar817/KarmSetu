@@ -38,9 +38,9 @@ function usePrismColor(speed = 0.4) {
 
 // ── Individual nav item ────────────────────────────────────────────
 const NAV_ITEMS = [
-  { label: "Home",       to: "/home",   icon: Home,       beam: "#00f5ff" },
+  { label: "Home",       to: "/dashboard",   icon: Home,       beam: "#00f5ff" },
   { label: "Jobs",       to: "/jobs",        icon: Briefcase,  beam: "#a855f7" },
-  { label: "Create Job", to: "/create-jobs", icon: PlusSquare, beam: "#ec4899" },
+  { label: "Create Job", to: "/create-job", icon: PlusSquare, beam: "#ec4899" },
   { label: "Profile",    to: "/profile",     icon: User,       beam: "#3b82f6" },
   { label: "About",      to: "/about",       icon: Info,       beam: "#22c55e" },
 ];
