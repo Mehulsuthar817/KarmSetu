@@ -5,7 +5,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { useAuth } from "../context/Authcontext";
 
-
 const fadeUp = (delay = 0) => ({
   initial: { y: 30, opacity: 0 },
   animate: { y: 0, opacity: 1 },
@@ -28,7 +27,6 @@ const selectClass =
   "bg-[#1e2630] border border-white/15 hover:border-indigo-400/40 focus:border-indigo-400/70 text-gray-200 rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all duration-300 appearance-none cursor-pointer";
 
 function CreateJob() {
-  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
@@ -43,7 +41,6 @@ function CreateJob() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -73,7 +70,10 @@ function CreateJob() {
       console.log(res.data);
       navigate("/dashboard");
     } catch (err) {
-      setError(err?.response?.data?.message || "Something went wrong. Please try again.");
+      setError(
+        err?.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -81,17 +81,19 @@ function CreateJob() {
 
   // useEffect(()=>{
   //   if(loading){
-      
+
   //   }
   //   console.log(user);
-   
-  // },[user])
 
+  // },[user])
 
   return (
     <div
       className="min-h-screen w-full"
-      style={{ background: "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)" }}
+      style={{
+        background:
+          "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)",
+      }}
     >
       {/* Grid overlay */}
       <div
@@ -104,6 +106,27 @@ function CreateJob() {
       />
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 py-12">
+        <motion.button
+          {...fadeUp(0)}
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-gray-400 hover:text-white text-sm font-medium mb-8 transition-colors duration-200 group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back
+        </motion.button>
 
         {/* Top badge */}
         <motion.div {...fadeUp(0)} className="mb-10">
@@ -124,7 +147,6 @@ function CreateJob() {
           className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 shadow-xl"
         >
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
             {/* Row: Title + Company */}
             <div className="grid sm:grid-cols-2 gap-5">
               <Field label="Job Title">
@@ -185,7 +207,9 @@ function CreateJob() {
                   required
                   className={selectClass}
                 >
-                  <option value="" disabled>Select mode</option>
+                  <option value="" disabled>
+                    Select mode
+                  </option>
                   <option value="Remote">Remote</option>
                   <option value="Hybrid">Hybrid</option>
                   <option value="Onsite">Onsite</option>
@@ -203,7 +227,9 @@ function CreateJob() {
                   required
                   className={selectClass}
                 >
-                  <option value="" disabled>Select type</option>
+                  <option value="" disabled>
+                    Select type
+                  </option>
                   <option value="full-time">full-time</option>
                   <option value="part-time">part-time</option>
                   <option value="contract">contract</option>
@@ -281,14 +307,12 @@ function CreateJob() {
                 Cancel
               </button>
             </div>
-
           </form>
         </motion.div>
       </div>
     </div>
   );
 }
-
 
 export default function CJ() {
   const { user, loading } = useAuth();
