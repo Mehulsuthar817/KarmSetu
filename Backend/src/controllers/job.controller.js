@@ -91,7 +91,7 @@ export const getSingleJob = async (req, res) => {
     }
 
     res.json({
-      succsess: true,
+      success: true,
       data: job,
     });
   } catch (err) {
@@ -129,7 +129,7 @@ export const getJobsadvanced = async (req, res) => {
     if (workMode) {
       match.workMode = workMode;
     }
-    if(jobType){
+    if (jobType) {
       match.jobType = jobType;
     }
     if (minSalary) {
@@ -148,7 +148,7 @@ export const getJobsadvanced = async (req, res) => {
     pipeline.push({ $sort: { createdAt: -1 } });
 
     const skip = (page - 1) * limit;
-// $skip: Skips results from previous pages (e.g., on Page 2, it skips the first 10)
+    // $skip: Skips results from previous pages (e.g., on Page 2, it skips the first 10)
     pipeline.push({ $skip: skip });
     pipeline.push({ $limit: Number(limit) });
 
@@ -180,25 +180,23 @@ export const getJobsadvanced = async (req, res) => {
   }
 };
 
-export const myJob = async (req , res) => {
-  try{
+export const myJob = async (req, res) => {
+  try {
     const jobs = await Job.find({ employerId: user._id });
-    if (jobs.length === 0){
+    if (jobs.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Job not found",
-      }); 
+      });
+      return res.status(200).json({
+        success: true,
+        data: jobs,
+      });
     }
-    res.json({
-      succsess: true,
-      data: job,
-    });
-
-
-  }catch(err){
-     res.status(500).json({
+  } catch (err) {
+    res.status(500).json({
       success: false,
       message: err.message,
     });
   }
-}
+};
