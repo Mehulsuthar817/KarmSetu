@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import JobApplicants from "./pages/Jobapplicants.jsx";
 import MyApplications from "./pages/Myapplications.jsx";
+import MyJobs from "./pages/Myjobs.jsx";
 
 
 function AppLayout({children}){
@@ -49,6 +50,7 @@ function App() {
         <Route path="/myapplication" element={ <ProtectedRoute> <AppLayout> <MyApplications/> </AppLayout> </ProtectedRoute> } >  </Route>
         <Route path="/create-job" element={ <ProtectedRoute> <AppLayout><CreateJob /></AppLayout> </ProtectedRoute> } />
         <Route path="/profile" element={ <ProtectedRoute> <AppLayout><Profile /></AppLayout> </ProtectedRoute> } />
+        <Route path="/myjob" element={ <ProtectedRoute> <AppLayout> <MyJobs /> </AppLayout> </ProtectedRoute> } />
       </Routes>
     </BrowserRouter>
   );

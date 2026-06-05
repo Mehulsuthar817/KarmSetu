@@ -31,12 +31,11 @@ export default function Dashboard() {
   }, []);
 
   const handleLogout = async () => {
-    try{
-        await API.post("/auth/logout");
-        navigate("/login");
-    }
-    catch(err){
-        console.log(err);
+    try {
+      await API.post("/auth/logout");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -62,10 +61,20 @@ export default function Dashboard() {
   const isProfileComplete = () => {
     if (!user) return false;
     if (user?.userId?.role === "candidate") {
-      return user.skills?.length > 0 && user.experience > 0 && user.education && user.location;
+      return (
+        user.skills?.length > 0 &&
+        user.experience > 0 &&
+        user.education &&
+        user.location
+      );
     }
     if (user?.userId?.role === "employer") {
-      return user.companyName && user.companyDescription && user.website && user.location;
+      return (
+        user.companyName &&
+        user.companyDescription &&
+        user.website &&
+        user.location
+      );
     }
     return false;
   };
@@ -74,7 +83,10 @@ export default function Dashboard() {
     return (
       <div
         className="flex justify-center items-center h-screen"
-        style={{ background: "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)" }}
+        style={{
+          background:
+            "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)",
+        }}
       >
         <motion.div
           animate={{ opacity: [0.4, 1, 0.4] }}
@@ -94,7 +106,10 @@ export default function Dashboard() {
   return (
     <div
       className="min-h-screen w-full"
-      style={{ background: "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)" }}
+      style={{
+        background:
+          "radial-gradient(circle at 50% 0%, #2D3742 0%, #1B2128 80%)",
+      }}
     >
       {/* Subtle grid overlay */}
       <div
@@ -107,7 +122,6 @@ export default function Dashboard() {
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-12">
-
         {/* ── TOP NAV BAR ── */}
         <motion.div
           {...fadeUp(0)}
@@ -115,7 +129,9 @@ export default function Dashboard() {
         >
           {/* Badge */}
           <div className="bg-white/10 backdrop-blur-md border border-white/20 text-gray-300 px-5 py-2 rounded-full text-xs font-semibold tracking-widest uppercase shadow-sm">
-            {role === "candidate" ? "Candidate Dashboard" : "Employer Dashboard"}
+            {role === "candidate"
+              ? "Candidate Dashboard"
+              : "Employer Dashboard"}
           </div>
 
           {/* Logout */}
@@ -131,7 +147,11 @@ export default function Dashboard() {
               stroke="currentColor"
               strokeWidth={2}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+              />
             </svg>
             Logout
           </button>
@@ -140,7 +160,8 @@ export default function Dashboard() {
         {/* ── WELCOME ── */}
         <motion.div {...fadeUp(0.05)} className="mb-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-            Welcome back,<br />
+            Welcome back,
+            <br />
             <span className="text-indigo-300">{user?.userId?.name}</span>
           </h1>
           <p className="text-gray-400 mt-3 text-base md:text-lg font-medium">
@@ -151,8 +172,10 @@ export default function Dashboard() {
         </motion.div>
 
         {/* ── STAT CARDS ── */}
-        <motion.div {...fadeUp(0.1)} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-
+        <motion.div
+          {...fadeUp(0.1)}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
+        >
           {/* Completion card with ring */}
           <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 shadow-lg relative overflow-hidden">
             <div
@@ -162,9 +185,13 @@ export default function Dashboard() {
                   "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.12) 0%, transparent 70%)",
               }}
             />
-            <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Profile Completion</p>
+            <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+              Profile Completion
+            </p>
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-bold text-white">{profilePercentage}%</span>
+              <span className="text-4xl font-bold text-white">
+                {profilePercentage}%
+              </span>
             </div>
             {/* Progress bar */}
             <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -180,28 +207,68 @@ export default function Dashboard() {
           {role === "candidate" ? (
             <>
               <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 shadow-lg relative overflow-hidden">
-                <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)" }} />
-                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Skills Added</p>
-                <span className="text-4xl font-bold text-white">{user?.skills?.length || 0}</span>
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)",
+                  }}
+                />
+                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+                  Skills Added
+                </p>
+                <span className="text-4xl font-bold text-white">
+                  {user?.skills?.length || 0}
+                </span>
               </div>
               <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 shadow-lg relative overflow-hidden">
-                <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)" }} />
-                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Experience</p>
-                <span className="text-4xl font-bold text-white">{user?.experience || 0}</span>
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)",
+                  }}
+                />
+                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+                  Experience
+                </p>
+                <span className="text-4xl font-bold text-white">
+                  {user?.experience || 0}
+                </span>
                 <span className="text-gray-400 text-sm ml-1">yrs</span>
               </div>
             </>
           ) : (
             <>
               <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 shadow-lg relative overflow-hidden">
-                <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)" }} />
-                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Company</p>
-                <p className="text-xl font-bold text-white truncate">{user?.companyName || "—"}</p>
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)",
+                  }}
+                />
+                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+                  Company
+                </p>
+                <p className="text-xl font-bold text-white truncate">
+                  {user?.companyName || "—"}
+                </p>
               </div>
               <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 shadow-lg relative overflow-hidden">
-                <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)" }} />
-                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Website</p>
-                <p className="text-base font-bold text-indigo-300 truncate">{user?.website || "Not Added"}</p>
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08) 0%, transparent 70%)",
+                  }}
+                />
+                <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+                  Website
+                </p>
+                <p className="text-base font-bold text-indigo-300 truncate">
+                  {user?.website || "Not Added"}
+                </p>
               </div>
             </>
           )}
@@ -214,7 +281,9 @@ export default function Dashboard() {
             className="bg-amber-400/10 border border-amber-400/30 backdrop-blur-md rounded-2xl p-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shadow-lg"
           >
             <div>
-              <h2 className="text-white font-bold text-lg">Complete Your Profile</h2>
+              <h2 className="text-white font-bold text-lg">
+                Complete Your Profile
+              </h2>
               <p className="text-gray-400 text-sm mt-1">
                 {role === "candidate"
                   ? "Employers are more likely to contact candidates with complete profiles."
@@ -235,7 +304,9 @@ export default function Dashboard() {
           {...fadeUp(0.22)}
           className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 mb-6 shadow-lg"
         >
-          <h2 className="text-white font-bold text-xl mb-5 tracking-tight">Profile Overview</h2>
+          <h2 className="text-white font-bold text-xl mb-5 tracking-tight">
+            Profile Overview
+          </h2>
 
           {role === "candidate" && (
             <div className="grid sm:grid-cols-2 gap-4">
@@ -247,7 +318,9 @@ export default function Dashboard() {
                 ["Experience", `${user?.experience || 0} Years`],
               ].map(([label, value]) => (
                 <div key={label} className="flex flex-col gap-0.5">
-                  <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">{label}</span>
+                  <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">
+                    {label}
+                  </span>
                   <span className="text-gray-200 font-medium">{value}</span>
                 </div>
               ))}
@@ -263,7 +336,9 @@ export default function Dashboard() {
                 ["Description", user?.companyDescription || "Not Added"],
               ].map(([label, value]) => (
                 <div key={label} className="flex flex-col gap-0.5">
-                  <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">{label}</span>
+                  <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">
+                    {label}
+                  </span>
                   <span className="text-gray-200 font-medium">{value}</span>
                 </div>
               ))}
@@ -277,7 +352,9 @@ export default function Dashboard() {
             {...fadeUp(0.28)}
             className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 shadow-lg"
           >
-            <h2 className="text-white font-bold text-xl mb-5 tracking-tight">Skills</h2>
+            <h2 className="text-white font-bold text-xl mb-5 tracking-tight">
+              Skills
+            </h2>
             {user?.skills?.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {user.skills.map((skill, i) => (
@@ -299,33 +376,57 @@ export default function Dashboard() {
         )}
 
         {role === "employer" && (
-          <motion.div
-            {...fadeUp(0.28)}
-            className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 shadow-lg"
-          >
-            <h2 className="text-white font-bold text-xl mb-5 tracking-tight">Company Details</h2>
-            <div className="grid sm:grid-cols-2 gap-4 mb-6">
-              {[
-                ["Company Name", user?.companyName || "Not Added"],
-                ["Website", user?.website || "Not Added"],
-                ["Location", user?.location || "Not Added"],
-                ["Description", user?.companyDescription || "Not Added"],
-              ].map(([label, value]) => (
-                <div key={label} className="flex flex-col gap-0.5">
-                  <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">{label}</span>
-                  <span className="text-gray-200 font-medium">{value}</span>
-                </div>
-              ))}
-            </div>
-            <Link
-              to="/create-job"
-              className="inline-block bg-indigo-300 hover:bg-indigo-400 text-white px-6 py-2.5 rounded-2xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-300"
+          <>
+            <motion.div
+              {...fadeUp(0.28)}
+              className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 shadow-lg"
             >
-              + Create Job
-            </Link>
-          </motion.div>
-        )}
+              <h2 className="text-white font-bold text-xl mb-5 tracking-tight">
+                Company Details
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                {[
+                  ["Company Name", user?.companyName || "Not Added"],
+                  ["Website", user?.website || "Not Added"],
+                  ["Location", user?.location || "Not Added"],
+                  ["Description", user?.companyDescription || "Not Added"],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex flex-col gap-0.5">
+                    <span className="text-gray-500 text-xs uppercase tracking-widest font-semibold">
+                      {label}
+                    </span>
+                    <span className="text-gray-200 font-medium">{value}</span>
+                  </div>
+                ))}
+              </div>
+              <Link
+                to="/create-job"
+                className="inline-block bg-indigo-300 hover:bg-indigo-400 text-white px-6 py-2.5 rounded-2xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-300"
+              >
+                + Create Job
+              </Link>
+            </motion.div>
+            <motion.div
+              {...fadeUp(0.28)}
+              className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl mt-5 p-7 shadow-lg"
+            >
+              <h2 className="text-white font-bold text-xl mb-5 tracking-tight">
+                Job Management
+              </h2>
 
+              <p className="text-gray-400 text-sm mb-6">
+                View and manage all jobs posted by your company.
+              </p>
+
+              <Link
+                to="/myjob"
+                className="inline-block bg-emerald-400 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-2xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-300"
+              >
+                View My Jobs
+              </Link>
+            </motion.div>
+          </>
+        )}
       </div>
     </div>
   );

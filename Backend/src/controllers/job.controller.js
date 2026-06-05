@@ -182,17 +182,20 @@ export const getJobsadvanced = async (req, res) => {
 
 export const myJob = async (req, res) => {
   try {
-    const jobs = await Job.find({ employerId: user._id });
+    const jobs = await Job.find({ employerId: req.user._id });
+
     if (jobs.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Job not found",
       });
+    }
       return res.status(200).json({
         success: true,
         data: jobs,
       });
-    }
+    
+
   } catch (err) {
     res.status(500).json({
       success: false,

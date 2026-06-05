@@ -1,7 +1,7 @@
-import { useAuth } from "../context/Authcontext";
+// import { useAuth } from "../context/Authcontext";
 
-const {user,loading} = useAuth();
+// const {user,loading} = useAuth();
 
-export default function tocheck(){
-    
-}
+// export default function tocheck(){
+
+// }

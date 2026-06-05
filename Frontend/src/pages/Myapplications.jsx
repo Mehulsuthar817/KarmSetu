@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import API from "../api/axios";
 import { useAuth } from "../context/Authcontext";
 
@@ -95,8 +95,7 @@ function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading]           = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
-  const {user} = useAuth();
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     (async () => {
@@ -282,12 +281,12 @@ export default function MA(){
       const { user, loading } = useAuth();
     
       if (loading) {
-        return <h1>Loading...</h1>;
+        return <h1 className="text-black" >Loading...</h1>;
       }
     
       if (user?.role === "employer") {
         return <Navigate to="/dashboard" replace />;
       }
     
-      return <CreateJob />;
+      return <MyApplications/>;
     }

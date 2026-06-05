@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Navigate, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { useAuth } from "../context/Authcontext";
-import { useEffect } from "react";
+
 
 const fadeUp = (delay = 0) => ({
   initial: { y: 30, opacity: 0 },

@@ -183,7 +183,7 @@ export default function Profile() {
         {/* View / Edit card */}
         <motion.div {...fadeUp(0.08)} className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-7 shadow-xl">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-white tracking-tight">
+            <h2 className="text-md md:text:xl font-bold text-white tracking-tight">
               {editMode ? "Edit Profile" : "Profile Information"}
             </h2>
             {!editMode && (
