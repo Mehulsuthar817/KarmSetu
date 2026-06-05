@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api/axios";
+import { useAuth } from "../context/Authcontext.jsx";
 
 const fadeUp = (delay = 0) => ({
   initial: { y: 30, opacity: 0 },
@@ -32,6 +33,8 @@ function StatusBadge({ status }) {
 function ApplicantDrawer({ app, onClose, onStatusChange }) {
   const [status, setStatus] = useState(app.status || "pending");
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
+  const {user} = useAuth();
 
   const handleSave = async () => {
     setSaving(true);
@@ -45,6 +48,10 @@ function ApplicantDrawer({ app, onClose, onStatusChange }) {
       setSaving(false);
     }
   };
+
+  if(user.role === "candidate"){
+    navigate("/dashboard");
+  }
 
   return (
     <motion.div

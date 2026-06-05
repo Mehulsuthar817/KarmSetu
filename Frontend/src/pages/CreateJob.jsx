@@ -1,8 +1,10 @@
 import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import { useAuth } from "../context/Authcontext";
+import { useEffect } from "react";
 
 const fadeUp = (delay = 0) => ({
   initial: { y: 30, opacity: 0 },
@@ -25,7 +27,8 @@ const inputClass =
 const selectClass =
   "bg-[#1e2630] border border-white/15 hover:border-indigo-400/40 focus:border-indigo-400/70 text-gray-200 rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all duration-300 appearance-none cursor-pointer";
 
-export default function CreateJob() {
+function CreateJob() {
+  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
@@ -40,6 +43,7 @@ export default function CreateJob() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,6 +78,15 @@ export default function CreateJob() {
       setLoading(false);
     }
   };
+
+  // useEffect(()=>{
+  //   if(loading){
+      
+  //   }
+  //   console.log(user);
+   
+  // },[user])
+
 
   return (
     <div
@@ -274,4 +287,19 @@ export default function CreateJob() {
       </div>
     </div>
   );
+}
+
+
+export default function CJ() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (user?.role === "candidate") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <CreateJob />;
 }

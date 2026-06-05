@@ -12,6 +12,7 @@ import { Children } from "react";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import JobApplicants from "./pages/Jobapplicants.jsx";
+import MyApplications from "./pages/Myapplications.jsx";
 
 
 function AppLayout({children}){
@@ -45,7 +46,7 @@ function App() {
         <Route path="/jobs" element={ <ProtectedRoute> <AppLayout> <Jobs /> </AppLayout> </ProtectedRoute>   } />
         <Route path="jobs/:slug/:id" element={ <ProtectedRoute> <AppLayout> <JobDetails /> </AppLayout> </ProtectedRoute>   } />
         <Route path="/jobs/:jobId/applicants" element={ <ProtectedRoute> <AppLayout> <JobApplicants /> </AppLayout> </ProtectedRoute>   } />
-        
+        <Route path="/myapplication" element={ <ProtectedRoute> <AppLayout> <MyApplications/> </AppLayout> </ProtectedRoute> } >  </Route>
         <Route path="/create-job" element={ <ProtectedRoute> <AppLayout><CreateJob /></AppLayout> </ProtectedRoute> } />
         <Route path="/profile" element={ <ProtectedRoute> <AppLayout><Profile /></AppLayout> </ProtectedRoute> } />
       </Routes>

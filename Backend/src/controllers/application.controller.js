@@ -3,17 +3,20 @@ import applyToJobService from "../services/application.service.js";
 
 export const applyJob = async (req, res) => {
   try {
-    if(!req.file){
+    console.log("check1");
+    if (!req.file) {
       return res.status(500).json({
-      success: false,
-      message: "Resume required",
-    });
+        success: false,
+        message: "Resume required",
+      });
+      console.log("check2");
     }
     const application = await applyToJobService(
       req.body.jobId,
       req.user,
       req.file,
     );
+    console.log("check3");
 
     res.status(201).json({
       success: true,
@@ -35,11 +38,14 @@ export const applyJob = async (req, res) => {
   }
 };
 
+
+
 export const getMyApplications = async (req, res) => {
   try {
-    const applications = await Application.find({
-      candidateId: req.user._id,
-    }).sort({ createdAt: -1 });
+    // application.controller.js
+    const applications = await Application.find({ candidateId: req.user._id })
+      .populate("jobId", "title companyName location workMode") // ← add this
+      .sort({ createdAt: -1 });
 
     res.json({
       success: true,

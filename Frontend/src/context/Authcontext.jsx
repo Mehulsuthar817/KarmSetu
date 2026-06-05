@@ -7,7 +7,7 @@ export function AuthProvider({children}){
 
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true);
-
+    
     const getme = async ()=>{
         try{
             const res = await API.get("/auth/getme");

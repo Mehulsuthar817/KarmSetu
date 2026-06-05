@@ -179,3 +179,26 @@ export const getJobsadvanced = async (req, res) => {
     });
   }
 };
+
+export const myJob = async (req , res) => {
+  try{
+    const jobs = await Job.find({ employerId: user._id });
+    if(!jobs){
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      }); 
+    }
+    res.json({
+      succsess: true,
+      data: job,
+    });
+
+
+  }catch(err){
+     res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
