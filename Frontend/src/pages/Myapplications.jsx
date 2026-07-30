@@ -52,7 +52,7 @@ function StatusBadge({ status }) {
   );
 }
 
-const STEPS = ["pending", "reviewed", "accepted"];
+const STEPS = ["pending", "reviewed"];
 const STATUS_ORDER = ["pending", "reviewed", "accepted", "rejected"];
 
 function ProgressTrack({ status }) {
@@ -96,7 +96,7 @@ function ProgressTrack({ status }) {
         );
       })}
       {/* Final node — accepted or rejected */}
-      <div className="flex items-center flex-1">
+      <div className="flex items-center">
         <div
           className={`h-px flex-1 mx-1 transition-all duration-500 ${
             isAccepted ? "bg-emerald-400/60" : "bg-white/10"

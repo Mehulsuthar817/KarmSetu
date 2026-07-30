@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Jobs from "./pages/Job.jsx";
@@ -39,7 +39,7 @@ function App() {
     
       <Routes>
            
-        <Route path="/" />
+        <Route path="/" element={ <Navigate to="/home" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={ <Home /> } />
         <Route path="/dashboard" element={ <AppLayout> <ProtectedRoute> <Dashboard /> </ProtectedRoute> </AppLayout> } />

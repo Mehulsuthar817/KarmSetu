@@ -4,18 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../api/axios";
 import Prism from "../components/Prism";
+import { useAuth } from "../context/Authcontext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {getme} = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await API.post("/auth/login", { email, password });
+      await getme();
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
